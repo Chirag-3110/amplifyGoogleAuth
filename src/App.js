@@ -1,23 +1,30 @@
-import logo from './logo.svg';
+import { Auth } from 'aws-amplify';
+import React, { useState } from 'react';
 import './App.css';
-
 function App() {
+  async function checkUser(){
+    const user=await Auth.currentAuthenticatedUser()
+    console.log(user);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <div>
+        <button
+          onClick={()=>Auth.federatedSignIn({provider:"Google"})}
         >
-          Learn React
-        </a>
-      </header>
+          Login with google
+        </button>
+        <button
+           onClick={()=>Auth.federatedSignIn()}
+        >
+          Login
+        </button>
+        <button
+           onClick={()=>checkUser()}
+        >
+          check for user
+        </button>
+      </div>
     </div>
   );
 }
